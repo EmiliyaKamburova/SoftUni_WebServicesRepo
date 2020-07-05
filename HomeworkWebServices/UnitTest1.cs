@@ -21,17 +21,17 @@ namespace HomeworkWebServices
         }
 
         [Test]
+        [Order(1)]
         public async Task GetHouseholds()
         {      
 
             var response = await _client.GetAsync("/households");
-            var resString = await response.Content.ReadAsStringAsync();
-
+            
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
 
         [Test]
-        [Order(1)]
+        [Order(2)]
         public async Task CreateHousehold()
         {         
 
@@ -50,7 +50,7 @@ namespace HomeworkWebServices
         }
 
         [Test] 
-        [Order(2)]
+        [Order(3)]
         public async Task CreateUser()
         {          
 
@@ -69,8 +69,18 @@ namespace HomeworkWebServices
             Assert.AreEqual("Ivanov", user.LastName);
         }
 
+
         [Test]
-        [Order(3)]
+        [Order (4)]
+        public async Task GetBooks()
+        {
+            var response = await _client.GetAsync("/books");
+         
+            Assert.IsTrue(response.IsSuccessStatusCode);
+        }
+
+        [Test]
+        [Order(5)]
         public async Task AddBook()
         {
 
@@ -89,12 +99,23 @@ namespace HomeworkWebServices
         }
 
         [Test]
-        public async Task GetWishlists()
+        [Order(6)]
+        public async Task AddBookWishlist()
+        {                        
+            var request = new HttpRequestMessage(HttpMethod.Post, "/wishlists/1/books/1");
+           
+            var response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+         
+            Assert.IsTrue(response.IsSuccessStatusCode);         
+        }
+
+        [Test]
+        [Order(7)]
+        public async Task GetHouseholdBooks()
         {
-
-            var response = await _client.GetAsync("/wishlists");
-            var resString = await response.Content.ReadAsStringAsync();
-
+            var response = await _client.GetAsync("/wishlists/1/books");
+          
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
     }
