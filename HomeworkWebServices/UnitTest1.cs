@@ -1,6 +1,7 @@
 using HomeworkWebServices.Models;
 using NUnit.Framework;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,7 @@ namespace HomeworkWebServices
             var user = User.FromJson(resString);
            
             Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.AreEqual("Ivan", user.FirstName);
             Assert.AreEqual("Ivanov", user.LastName);
         }
